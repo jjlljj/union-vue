@@ -6,7 +6,8 @@
 
 <script>
   import mapboxgl from 'mapbox-gl';
-  import { MB_TOKEN } from '../../key' ;
+  import { MB_TOKEN } from '../../key';
+  import { renderMapElements } from  '../../helpers/mapHelper'
 
   export default {
     name: 'Map',
@@ -20,15 +21,16 @@
       mapboxgl.accessToken = MB_TOKEN
       const map = new mapboxgl.Map({
         container: 'map',
-        style: 'mapbox://styles/mapbox/streets-v9',
+        style: 'mapbox://styles/mapbox/light-v9',
         //  maxbounds: [lng, lat],
-        center: [-104.994813, 39.7452204],
-        zoom: 16,
+        center: [-105.00006, 39.75317],
+        zoom: 18,
         bearing: -17.6,
-        pitch: 45
+        pitch: 55
       })
 
-     this.map = map
+      this.map = map
+      renderMapElements(map)
     },
     beforeDestroy() {
       this.map.remove();

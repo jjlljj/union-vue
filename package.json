@@ -2,7 +2,7 @@
   "private": true,
   "name": "union-vue",
   "productName": "union-vue",
-  "description": "My luminous Vue project",
+  "description": "Interactive 3d Rendering of Union station on MapboxGL map",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
@@ -13,8 +13,7 @@
     "test": "tyu"
   },
   "author": {
-    "name": "jjlljj",
-    "email": "logueja@gmail.com"
+    "name": "James Logue"
   },
   "dependencies": {
     "mapbox-gl": "^0.45.0",

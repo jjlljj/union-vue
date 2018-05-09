@@ -33,7 +33,7 @@
 
   .banner {
     background-color: #f6f6f6;
-    padding: 50px 10px;
+    padding: 50px 50px;
   }
 
 </style>
