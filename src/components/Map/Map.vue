@@ -1,14 +1,12 @@
 <template>
-  <div>
-    <h2>I am map</h2>
-    <div class="map-wrap">
-      <div id="map"  ref="mapCanvas"></div>
-    </div>
+  <div class="map-wrap">
+    <div id="map"  ref="mapCanvas"></div>
   </div>
 </template>
 
 <script>
   import mapboxgl from 'mapbox-gl';
+  import { MB_TOKEN } from '../../key' ;
 
   export default {
     name: 'Map',
@@ -18,7 +16,8 @@
       }
     },
     mounted: function() {
-      console.log(this.$refs)
+  
+      mapboxgl.accessToken = MB_TOKEN
       const map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/streets-v9',
@@ -36,5 +35,22 @@
 </script>
 
 <style scoped>
+
+  .map-wrap {
+    position: relative;
+    width: 100%;
+    height: 80vh;
+  }
+
+  #map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+  }
+
+  #map canvas {
+    width: 100%;
+  }
 
 </style>
