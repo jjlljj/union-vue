@@ -1,0 +1,61 @@
+import { Threebox } from 'threebox';
+import * as THREE from 'three';
+import GLTFLoader from 'three-gltf-loader';
+import mapboxgl from 'mapbox-gl';
+
+//export const mapParams = (mapContainer) => ({
+  //container: mapContainer,
+  //style: 'mapbox://styles/nogully/cjg2lpcwt61xp2rmenlcq9ce2',
+  ////  maxbounds: [lng, lat],
+  //center: [-104.994813, 39.7452204],
+  //zoom: 16,
+  //bearing: -17.6,
+  //pitch: 45
+//})
+
+export const renderMapElements = map => {
+
+  map.on('load', () => {
+    renderThreebox(map)
+
+    //setTimeout(() => toggleLoad(), 1800)
+  })
+}
+
+const renderThreebox = map => {
+  const threebox = new Threebox(map);
+  threebox.setupDefaultLights();
+
+  const loader = new GLTFLoader();
+
+  loader.load("models/unionStation.gltf", gltf => {
+    console.log(gltf)
+    const children1 = gltf.scene.children[0].children[0].children;
+    const children2 = gltf.scene.children[0].children[1].children;
+    console.log(children2)
+    const geometries = parseChildrenGeoms([...children2.slice(0,11), ...children2.slice(13,40), ...children2[41].children, ...children2[42].children])
+    //const geometries = new THREE.Geometry().fromBufferGeometry( bufferGeometry );
+
+
+
+    const position = [-105.00006, 39.75317, 0];
+
+    renderAllChildren(geometries, position, threebox)
+
+  });
+}
+
+const parseChildrenGeoms = children => {
+  return children.map(child => new THREE.Geometry().fromBufferGeometry(child.geometry))
+}
+
+const renderAllChildren = (geometries, position, threebox) => {
+  geometries.map(geometry => {
+    geometry.rotateY((90/360)*4*Math.PI);
+    geometry.rotateX((90/360)*2*Math.PI);
+
+    const material = new THREE.MeshPhongMaterial( {color: 0xaaaaff, side: THREE.DoubleSide}); 
+    let build = new THREE.Mesh( geometry, material );
+    threebox.addAtCoordinate(build, position);
+  })
+}
