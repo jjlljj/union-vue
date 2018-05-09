@@ -29,28 +29,41 @@ const renderThreebox = map => {
   const loader = new GLTFLoader();
 
   loader.load("models/unionStation.gltf", gltf => {
-    console.log(gltf)
-    const children1 = gltf.scene.children[0].children[0].children;
-    const children2 = gltf.scene.children[0].children[1].children;
-    console.log(children1[1])
+    const children = gltf.scene.children[0].children[1].children;
 
-    const flattened = children2.slice(41).reduce((flattened, group) => { return [...flattened, ...group.children]},[])
+    const flattened = children.slice(41).reduce((flattened, group) => { return [...flattened, ...group.children]},[])
 
-    const geometries = parseChildrenGeoms([
-      ...children1,
-      ...children2.slice(0,11), 
-      ...children2.slice(13,40),
-      ...flattened
+    const meshes = parseChildren([
+      ...children.slice(0,11), 
+      ...children.slice(13,40),
+      //...flattened
     ]) 
     
     const position = [-105.00006, 39.75317, 0];
 
-    renderAllChildren(geometries, position, threebox)
+    renderMeshes(meshes, position, threebox)
+
+    //renderAllChildren(geometries, position, threebox)
 
   });
 }
 
-const parseChildrenGeoms = children => {
+const parseChildren = children => {
+  return children.map(child => {
+    let geom = new THREE.Geometry().fromBufferGeometry(child.geometry) || child.geometry
+    let material = child.material || new THREE.MeshPhongMaterial( {color: 0xaaaaff, side: THREE.DoubleSide}); 
+   
+    geom.rotateY((90/360)*4*Math.PI);
+    geom.rotateX((90/360)*2*Math.PI);
+    return  new THREE.Mesh( geom, material );
+  })
+}
+
+const renderMeshes = (meshes, position, threebox) => {
+  meshes.map(build => threebox.addAtCoordinate(build, position))
+}
+
+const parseChildrenGeoms= children => {
   return children.map(child => new THREE.Geometry().fromBufferGeometry(child.geometry) || child.geometry) 
 }
 
