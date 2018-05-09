@@ -32,10 +32,18 @@ const renderThreebox = map => {
     console.log(gltf)
     const children1 = gltf.scene.children[0].children[0].children;
     const children2 = gltf.scene.children[0].children[1].children;
-    console.log(children2)
-    const geometries = parseChildrenGeoms([...children2.slice(0,11), ...children2.slice(13,40), ...children2[41].children, ...children2[42].children])
-    //const geometries = new THREE.Geometry().fromBufferGeometry( bufferGeometry );
+    console.log(children1)
 
+    const flattened = children2.slice(41).reduce((flattened, group) => { return [...flattened, ...group.children]},[])
+
+    const geometries = parseChildrenGeoms([
+      ...children1,
+      ...children2.slice(0,11), 
+      ...children2.slice(13,40),
+      ...flattened
+    ]) 
+    
+    //const geometries = new THREE.Geometry().fromBufferGeometry( bufferGeometry );
 
 
     const position = [-105.00006, 39.75317, 0];
@@ -46,7 +54,7 @@ const renderThreebox = map => {
 }
 
 const parseChildrenGeoms = children => {
-  return children.map(child => new THREE.Geometry().fromBufferGeometry(child.geometry))
+  return children.map(child => new THREE.Geometry().fromBufferGeometry(child.geometry) || child.geometry) 
 }
 
 const renderAllChildren = (geometries, position, threebox) => {
