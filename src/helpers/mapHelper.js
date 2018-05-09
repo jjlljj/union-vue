@@ -43,9 +43,6 @@ const renderThreebox = map => {
       ...flattened
     ]) 
     
-    //const geometries = new THREE.Geometry().fromBufferGeometry( bufferGeometry );
-
-
     const position = [-105.00006, 39.75317, 0];
 
     renderAllChildren(geometries, position, threebox)
@@ -58,11 +55,14 @@ const parseChildrenGeoms = children => {
 }
 
 const renderAllChildren = (geometries, position, threebox) => {
+  const colors = [0xaaaaff, 0x0000FF, 0x00FFFF]
   geometries.map(geometry => {
     geometry.rotateY((90/360)*4*Math.PI);
     geometry.rotateX((90/360)*2*Math.PI);
 
-    const material = new THREE.MeshPhongMaterial( {color: 0xaaaaff, side: THREE.DoubleSide}); 
+    let color = colors[Math.floor(Math.random()*colors.length)]
+    
+    let material = new THREE.MeshPhongMaterial( {color, side: THREE.DoubleSide}); 
     let build = new THREE.Mesh( geometry, material );
     threebox.addAtCoordinate(build, position);
   })

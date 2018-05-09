@@ -26,7 +26,7 @@
         center: [-105.00006, 39.75317],
         zoom: 18,
         bearing: -17.6,
-        pitch: 45
+        pitch: 55
       })
 
       this.map = map
