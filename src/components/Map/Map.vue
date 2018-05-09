@@ -25,8 +25,8 @@
         //  maxbounds: [lng, lat],
         center: [-105.00006, 39.75317],
         zoom: 18,
-        bearing: -17.6,
-        pitch: 55
+        bearing: -22.6,
+        pitch: 60 
       })
 
       this.map = map
