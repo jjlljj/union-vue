@@ -32,7 +32,7 @@ const renderThreebox = map => {
     console.log(gltf)
     const children1 = gltf.scene.children[0].children[0].children;
     const children2 = gltf.scene.children[0].children[1].children;
-    console.log(children1)
+    console.log(children1[1])
 
     const flattened = children2.slice(41).reduce((flattened, group) => { return [...flattened, ...group.children]},[])
 
