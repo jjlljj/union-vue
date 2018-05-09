@@ -29,10 +29,10 @@
       })
 
      this.map = map
+    },
+    beforeDestroy() {
+      this.map.remove();
     }
-  },
-  beforeDestroy() {
-	this.map.remove();
   }
 
 </script>
