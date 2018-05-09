@@ -10,16 +10,21 @@
       <h1>Welcome to Vue.js</h1>
     </div>
     <div class="bottom">
-      <span class="fade">
-      </span>
+      <Map v-once/>
     </div>
   </div>
 </template>
 
 <script>
+  import Map from '../Map/Map.vue'
+
   export default {
-    name: 'app'
+    name: 'app',
+    components: {
+      Map
+    }
   }
+  
 </script>
 
 <!-- CSS libraries -->
